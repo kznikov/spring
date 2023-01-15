@@ -21,8 +21,6 @@ services:
     hostname: database
     env_file:
       - .env
-    volumes:
-      - ./database/app.sql:/docker-entrypoint-initdb.d/app.sql
     ports:
       - 3308:3306
     restart: unless-stopped

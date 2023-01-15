@@ -1,0 +1,21 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
+    <ul class="sidebar-menu">
+        <li class="header">MAIN NAVIGATION</li>
+        <li class="active treeview">
+            <a href="#">
+                <i class="fa fa-th"></i> <span>Users</span>
+                <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+            </a>
+            <ul class="treeview-menu">
+                <li class="active"><a th:href="@{/users/create}"><i class="fa fa-circle-o"></i> Create</a></li>
+                <li><a th:href="@{/users/list}"><i class="fa fa-circle-o"></i> List</a></li>
+                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fa fa-circle-o"></i> Logout</a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<!-- /.sidebar -->

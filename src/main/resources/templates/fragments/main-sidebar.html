@@ -2,17 +2,17 @@
 <section class="sidebar" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
     <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
-        <li class="active treeview">
+        <li class="treeview" sec:authorize="hasAuthority('ADMIN')">
             <a href="#">
-                <i class="fa fa-th"></i> <span>Users</span>
+                <i class="fa fa-cog"></i> <span>Admin</span>
                 <span class="pull-right-container">
           <i class="fa fa-angle-left pull-right"></i>
         </span>
             </a>
             <ul class="treeview-menu">
-                <li class="active"><a th:href="@{/users/create}"><i class="fa fa-circle-o"></i> Create</a></li>
-                <li><a th:href="@{/users/list}"><i class="fa fa-circle-o"></i> List</a></li>
-                <li sec:authorize="isAuthenticated()"><a th:href="@{/logout}"><i class="fa fa-circle-o"></i> Logout</a>
+                <li><a th:href="@{/admin/user/create}"><i class="fa fa-users"></i> Create User</a></li>
+                <li><a th:href="@{/admin/user/list}"><i class="fa fa-user-plus"></i> List Users</a></li>
+                <li><a th:href="@{/admin/role/list}"><i class="fa fa-sitemap"></i> List Groups</a>
                 </li>
             </ul>
         </li>

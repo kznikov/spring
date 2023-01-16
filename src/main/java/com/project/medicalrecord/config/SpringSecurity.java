@@ -33,6 +33,7 @@ public class SpringSecurity {
                         , "/extra/**"
                         , "/favicon.ico")
                 .permitAll()
+                .antMatchers("/admin/**").hasAuthority("ADMIN")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

@@ -11,21 +11,30 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import java.util.UUID;
-
 @Controller
 @AllArgsConstructor
 @RequestMapping("/")
-public class UserController {
+public class AuthController {
 
-
-    private final ModelMapper modelMapper;
 
 
     @GetMapping("")
     public String home(Model model, Authentication authentication) {
 
         model.addAttribute("email", authentication.getName());
+
+      /*  User user = new User();
+        user.setFirstName("Krasimir");
+        user.setLastName("Krasimir");
+        user.setEmail("asd");
+        user.setUpdatedAt(new Timestamp((new Date()).getTime()));
+        user.setCreatedAt(new Timestamp((new Date()).getTime()));
+        // encrypt the password using spring security
+        user.setPassword("$2a$10$ffs2WPKAwG6AHMYP1yNo4uQTRtO0xu9BEDPZDV302UTvlUTwDGSGi");
+
+
+        userRepository.save(user);
+    */
 
         return "user/dashboard/index";
     }
@@ -36,7 +45,4 @@ public class UserController {
         return "user/auth/login";
     }
 
-    private UserViewModel convertToUserViewModel(UserDTO userDTO) {
-        return modelMapper.map(userDTO, UserViewModel.class);
-    }
 }

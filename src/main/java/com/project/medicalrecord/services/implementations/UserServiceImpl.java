@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService {
         //user.setPassword(userDto.getPassword());
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         Role role = roleRepository.findByName("ADMIN");
+
         if (role == null) {
             role = checkRoleExist();
         }
@@ -51,12 +52,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public User findByEmailAndActive(String email) {
+        return userRepository.findByEmailAndIsActive(email, true);
     }
 
     @Override
-    public List<UserDTO> findAllUsers() {
+    public List<UserDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
         return users.stream().map((user) -> convertToUserDTO(user))
                 .collect(Collectors.toList());

@@ -8,16 +8,20 @@
 <body>
 <section layout:fragment="header">
     <h1>
-        Dashboard
-        <small>Control panel</small>
+        System
+        <small>Edit User</small>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Dashboard</li>
+        <li><a href="#"><i class="fa fa-cog"></i> Admin</a></li>
+        <li class="active">Edit User</li>
     </ol>
 </section>
 <div layout:fragment="content">
 
 </div>
+
+<th:block layout:fragment="script">
+    <script src="/dist/js/pages/dashboard.js"></script>
+</th:block>
 </body>
 </html>

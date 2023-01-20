@@ -1,14 +1,15 @@
 package com.project.medicalrecord.data.entity;
 
-import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-import org.hibernate.annotations.UpdateTimestamp;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
+import org.hibernate.annotations.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Past;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,6 +20,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @ToString
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 @Table(name = "users")
 public class User {
 
@@ -42,15 +44,12 @@ public class User {
     private String password;
 
     @Column(nullable = false)
+    @ColumnDefault("true")
     private boolean isActive;
 
-    @NotNull
-    @Past(message = "The date has to be in the past!")
     @CreationTimestamp
     private Timestamp createdAt;
 
-    @NotNull
-    @Past(message = "The date has to be in the past!")
     @UpdateTimestamp
     private Timestamp updatedAt;
 
@@ -63,3 +62,14 @@ public class User {
 
 
 }
+
+
+
+
+
+
+
+
+
+
+

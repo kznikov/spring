@@ -2,6 +2,8 @@
 <section class="sidebar" xmlns:sec="http://www.w3.org/1999/xhtml" xmlns:th="http://www.w3.org/1999/xhtml">
     <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
+
+        <!-- ADMIN -->
         <li class="treeview" sec:authorize="hasAuthority('ADMIN')">
             <a href="#">
                 <i class="fa fa-cog"></i> <span>Admin</span>
@@ -12,10 +14,60 @@
             <ul class="treeview-menu">
                 <li><a th:href="@{/admin/user/create}"><i class="fa fa-users"></i> Create User</a></li>
                 <li><a th:href="@{/admin/user/list}"><i class="fa fa-user-plus"></i> List Users</a></li>
-                <li><a th:href="@{/admin/role/list}"><i class="fa fa-sitemap"></i> List Groups</a>
+                <li><a th:href="@{/admin/role/list}"><i class="fa fa-sitemap"></i> List Roles</a>
                 </li>
             </ul>
         </li>
+
+        <!-- / ADMIN -->
+
+        <!-- DOCTOR -->
+
+        <li class="treeview" sec:authorize="hasAuthority('DOCTOR')">
+            <a href="#">
+                <i class="fa fa-cog"></i> <span>Patients</span>
+                <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a th:href="@{/doctor/patient/create}"><i class="fa fa-users"></i> Create Patient</a></li>
+                <li><a th:href="@{/doctor/patient/list}"><i class="fa fa-user-plus"></i> List Patients</a></li>
+            </ul>
+        </li>
+
+        <!-- / DOCTOR -->
+
+        <!-- PATIENT -->
+
+        <li class="treeview" sec:authorize="hasAuthority('PATIENT')">
+            <a href="#">
+                <i class="fa fa-cog"></i> <span>Appointments</span>
+                <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a th:href="@{/patient/appointment/list}"><i class="fa fa-users"></i> Create User</a></li>
+                </li>
+            </ul>
+        </li>
+
+        <li class="treeview" sec:authorize="hasAuthority('PATIENT')">
+            <a href="#">
+                <i class="fa fa-cog"></i> <span>Health Insurances</span>
+                <span class="pull-right-container">
+          <i class="fa fa-angle-left pull-right"></i>
+        </span>
+            </a>
+            <ul class="treeview-menu">
+                <li><a th:href="@{/patient/appointment/list}"><i class="fa fa-users"></i> List Insurances</a></li>
+                </li>
+            </ul>
+        </li>
+
+        <!-- / PATIENT -->
+
     </ul>
 </section>
 <!-- /.sidebar -->

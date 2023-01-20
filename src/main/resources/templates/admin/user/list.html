@@ -19,6 +19,26 @@
 <div layout:fragment="content">
     <div class="row">
         <div class="col-xs-12">
+
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    There was some error in registration.
+                </div>
+            </div>
+
+            <div th:if="${param.email}">
+                <div class="alert alert-danger">
+                    There is already a user registered with the email provided.
+                </div>
+            </div>
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    Successfully registered new user.
+                </div>
+            </div>
+
+
             <div class="box">
                 <div class="box-header">
                     <h3 class="box-title">Users</h3>
@@ -27,43 +47,59 @@
                 <div class="box-body">
                     <div class="box-footer center">
                         <a th:href="@{/admin/user/create}">
-                            <button type="button" class="btn btn-primary pull-right"><i class="fa fa-plus"></i> Add New</button>
+                            <button class="btn btn-primary pull-right" type="button"><i class="fa fa-plus"></i> Add New
+                            </button>
                         </a>
-                        <!--<form th:action="@{/product/list}" method="get">
-                            <input type="search" th:value="${param.search}" name='search' placeholder="search">
-                            <button type="submit">Search</button>
-                        </form>-->
                     </div>
-                    <!--<div id="example1_wrapper" class="dataTables_wrapper form-inline dt-bootstrap">-->
                     <div class="row">
                         <div class="col-sm-12">
-                            <table id="example1" class="table table-bordered table-striped dataTable" role="grid"
-                                   aria-describedby="example1_info">
+                            <table aria-describedby="example1_info" class="table table-bordered table-striped dataTable"
+                                   id="example1"
+                                   role="grid">
                                 <thead class="thead">
                                 <tr>
                                     <th>User ID</th>
-                                    <th>Product Type</th>
-                                    <th>Name</th>
-                                    <th>Brand</th>
-                                    <th>Made In</th>
-                                    <th>Price</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Roles</th>
+                                    <th>Active</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
                                     <th>Actions</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="product : ${listProducts}">
-                                    <td th:text="${product.id}">Product ID</td>
-                                    <td th:each="productType : ${productTypes}"
-                                        th:if="(${productType.id} == ${product.productTypeId})"
-                                        th:text="${productType.name}">Product Type
-                                    </td>
-                                    <td th:text="${product.name}">Name</td>
-                                    <td th:text="${product.brand}">Brand</td>
-                                    <td th:text="${product.madein}">Made in</td>
-                                    <td th:text="${product.price}">Price</td>
+                                <tr th:each="user : ${listUsers.content}">
+                                    <td th:text="${user.id}"></td>
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.email}"></td>
                                     <td>
-                                        <a href="#" class="btn btn-primary btn-xs purple editView" title="Edit" th:href="@{'/product/edit/' + ${product.id}}"><i class="fa fa-edit"></i> Edit</a>
-                                        <a href="#" class="btn btn-danger btn-xs purple deleteView" title="Delete" th:href="@{'/product/delete/' + ${product.id}}"><i class="fa fa-trash-o"></i> Delete</a>
+                                        <span class='label label-warning' th:each="role : ${user.roles}"
+                                              th:text="${role.name}"></span>
+                                    </td>
+                                    <td th:if="${user.isActive}"><span class="label label-success">Active</span></td>
+                                    <td th:if="${!user.isActive}"><span class="label label-danger">Not Active</span>
+                                    </td>
+                                    <td th:text="${user.createdAt}"></td>
+                                    <td th:text="${user.updatedAt}"></td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs purple editView" href="#"
+                                           th:href="@{'/admin/user/edit/' + ${user.id}}"
+                                           title="Edit"><i class="fa fa-edit"></i> Edit</a>
+                                        <a class="btn btn-danger btn-xs purple" href="#"
+                                           th:href="@{'/admin/user/changeStatus/' + ${user.id} + '/false'}"
+                                           th:if="${user.isActive}"
+                                           title="Deactivate">
+                                            <i class="fa fa-trash-o"></i> Deactivate
+                                        </a>
+                                        <a class="btn btn-success btn-xs purple" href="#"
+                                           th:href="@{'/admin/user/changeStatus/' + ${user.id} + '/true'}"
+                                           th:if="${!user.isActive}"
+                                           title="Activate">
+                                            <i class="fa fa-play"></i> Activate
+                                        </a>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -72,15 +108,16 @@
                     </div>
                     <!--</div>-->
 
-                    <!--<div class="dataTables_paginate paging_bootstrap">
-                        <ul th:if="${listProducts.totalPages > 0}" th:each="pageNumber : ${pageNumbers}"  class="pagination">
-                            <li th:class="${pageNumber==listProducts.number + 1} ? active">
-                                <a th:href="@{/product/list(search=${param.search},size=${listProducts.size}, page=${pageNumber})}"
+                    <div class="dataTables_paginate paging_bootstrap">
+                        <ul class="pagination" th:each="pageNumber : ${pageNumbers}"
+                            th:if="${listUsers.totalPages > 0}">
+                            <li th:class="${pageNumber==listUsers.number + 1} ? active">
+                                <a th:href="@{/admin/user/list(size=${listUsers.size}, page=${pageNumber})}"
                                    th:text=${pageNumber}>
                                 </a>
                             </li>
                         </ul>
-                    </div>-->
+                    </div>
 
                 </div>
                 <!-- /.box-body -->
@@ -94,22 +131,25 @@
 
 <th:block layout:fragment="script">
     <script>
-        $(function () {
-
+       $(function () {
             $('#example1').DataTable({
-              'paging'      : true,
+              'pagingType'  : 'full_numbers',
+              'paging'      : false,
               'lengthChange': false,
-              'searching'   : true,
+              'searching'   : false,
               'ordering'    : true,
               'info'        : true,
               'autoWidth'   : false
             })
-
-            jQuery('#example1_wrapper input').addClass("form-control input-sm");
         })
+
+
+
+
+
+
     </script>
 </th:block>
 
-</th:block>
 </body>
 </html>

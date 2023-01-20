@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html layout:decorate="layout"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Dashboard</title>
+</head>
+<body>
+<section layout:fragment="header">
+    <h1>
+        Patients
+        <small>List patients</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-cog"></i> Patients</a></li>
+        <li class="active">List Patients</li>
+    </ol>
+</section>
+<div layout:fragment="content">
+    <div class="row">
+        <div class="col-xs-12">
+
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title">Patients</h3>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body">
+                    <div class="box-footer center">
+                        <a th:href="@{/doctor/patient/create}">
+                            <button class="btn btn-primary pull-right" type="button"><i class="fa fa-plus"></i> Add New
+                            </button>
+                        </a>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table aria-describedby="example1_info" class="table table-bordered table-striped dataTable"
+                                   id="example1"
+                                   role="grid">
+                                <thead class="thead">
+                                <tr>
+                                    <th>Patient ID</th>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Active</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
+                                    <th>Actions</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="patient : ${patients}">
+                                    <td th:text="${patient.id}"></td>
+                                    <td th:text="${patient.firstName}"></td>
+                                    <td th:text="${patient.lastName}"></td>
+                                    <td th:text="${patient.email}"></td>
+                                    <td th:if="${patient.isActive}"><span class="label label-success">Active</span></td>
+                                    <td th:if="${!patient.isActive}"><span class="label label-danger">Not Active</span>
+                                    </td>
+                                    <td th:text="${patient.createdAt}"></td>
+                                    <td th:text="${patient.updatedAt}"></td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs purple editView" href="#"
+                                           th:href="@{'/doctor/patient/edit/' + ${patient.id}}"
+                                           title="Edit"><i class="fa fa-edit"></i> Edit</a>
+                                        <a class="btn btn-danger btn-xs purple" href="#"
+                                           th:href="@{'/doctor/patient/changeStatus/' + ${patient.id} + '/false'}"
+                                           th:if="${patient.isActive}"
+                                           title="Deactivate">
+                                            <i class="fa fa-trash-o"></i> Deactivate
+                                        </a>
+                                        <a class="btn btn-success btn-xs purple" href="#"
+                                           th:href="@{'/doctor/patient/changeStatus/' + ${patient.id} + '/true'}"
+                                           th:if="${!user.isActive}"
+                                           title="Activate">
+                                            <i class="fa fa-play"></i> Activate
+                                        </a>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <!--</div>-->
+
+                    <!-- <div class="dataTables_paginate paging_bootstrap">
+                         <ul class="pagination" th:each="pageNumber : ${pageNumbers}"
+                             th:if="${listUsers.totalPages > 0}">
+                             <li th:class="${pageNumber==listUsers.number + 1} ? active">
+                                 <a th:href="@{/admin/user/list(size=${listUsers.size}, page=${pageNumber})}"
+                                    th:text=${pageNumber}>
+                                 </a>
+                             </li>
+                         </ul>
+                     </div>-->
+
+                </div>
+                <!-- /.box-body -->
+            </div>
+            <!-- /.box -->
+        </div>
+        <!-- /.col -->
+    </div>
+
+</div>
+
+<th:block layout:fragment="script">
+    <script>
+       $(function () {
+            $('#example1').DataTable({
+              'paging'      : true,
+              'lengthChange': false,
+              'searching'   : true,
+              'ordering'    : true,
+              'info'        : true,
+              'autoWidth'   : false
+            })
+        })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </script>
+</th:block>
+
+</body>
+</html>

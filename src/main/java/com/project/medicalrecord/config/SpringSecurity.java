@@ -34,6 +34,8 @@ public class SpringSecurity {
                         , "/favicon.ico")
                 .permitAll()
                 .antMatchers("/admin/**").hasAuthority("ADMIN")
+                .antMatchers("/patient/**").hasAuthority("PATIENT")
+                .antMatchers("/doctor/**").hasAuthority("DOCTOR")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()

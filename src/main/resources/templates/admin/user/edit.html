@@ -17,11 +17,119 @@
     </ol>
 </section>
 <div layout:fragment="content">
+    <div class="row">
+        <div class="col-md-12">
 
+            <div th:if="${param.error}">
+                <div class="alert alert-danger">
+                    There was some error in updating.
+                </div>
+            </div>
+
+            <div th:if="${param.email}">
+                <div class="alert alert-danger">
+                    There is already a user registered with the email provided.
+                </div>
+            </div>
+
+            <div th:if="${param.success}">
+                <div class="alert alert-info">
+                    Successfully updated user.
+                </div>
+            </div>
+
+
+            <!-- Horizontal Form -->
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">User Detail</h3>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+                <form class="form-horizontal" method="post" th:action="@{'/admin/user/update/' + ${user.id}}"
+                      th:object="${user}">
+                    <div class="box-body">
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">First Name</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" th:field="*{firstName}" type="text"/>
+                                <p class="text-red" th:errors="*{firstName}"
+                                   th:if="${#fields.hasErrors('firstName')}"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Last Name</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" th:field="*{lastName}" type="text"/>
+                                <p class="text-red" th:errors="*{lastName}"
+                                   th:if="${#fields.hasErrors('lastName')}"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Email</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" th:field="*{email}" type="text"/>
+                                <p class="text-red" th:errors="*{email}"
+                                   th:if="${#fields.hasErrors('email')}"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Role/s</label>
+                            <div class="col-sm-10">
+                                <select class="form-control" th:field="*{roles}">
+                                    <option th:each="role : ${roles}" th:utext="${role.name}" th:value="${role.id}"/>
+                                </select>
+                                <p class="text-red" th:errors="*{roles}"
+                                   th:if="${#fields.hasErrors('roles')}"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Password</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" th:field="*{password}" type="password"/>
+                                <p class="text-red" th:errors="*{password}"
+                                   th:if="${#fields.hasErrors('password')}"></p>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">Confirm password</label>
+                            <div class="col-sm-10">
+                                <input class="form-control" field="*{password}" type="password"/>
+                                <p class="text-red" th:errors="*{password}"
+                                   th:if="${#fields.hasErrors('password')}"></p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.box-body -->
+                    <div class="box-footer center">
+                        <a th:href="@{/admin/user/list}">
+                            <button class="btn btn-default" type="button"><i class="fa fa-right"></i> Cancel</button>
+                        </a>
+                        <button class="btn btn-info pull-right" type="submit"><i class="fa fa-save"></i> Save</button>
+                    </div>
+                    <!-- /.box-footer -->
+                </form>
+            </div>
+            <!-- /.box -->
+        </div>
+    </div>
 </div>
 
 <th:block layout:fragment="script">
-    <script src="/dist/js/pages/dashboard.js"></script>
+    <script>
+         <!--$('.select2').select2()-->
+
+
+
+
+    </script>
 </th:block>
 </body>
 </html>
